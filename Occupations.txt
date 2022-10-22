@@ -1,0 +1,17 @@
+Links: https://www.hackerrank.com/challenges/occupations/problem
+
+Answer:
+
+SELECT [Doctor],[Professor],[Singer],[Actor] from (
+    SELECT Name, 
+           Occupation, 
+           ROW_NUMBER() OVER (PARTITION BY Occupation Order by Name asc) AS Rank
+FROM OCCUPATIONS) o
+PIVOT(
+    min(name) 
+    FOR occupation IN (
+        [Doctor], 
+        [Professor], 
+        [Singer], 
+        [Actor])
+) AS pt
